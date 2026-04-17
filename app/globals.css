@@ -1,0 +1,330 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --font-serif: 'Lora', Georgia, serif;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --color-text: #1a1a1a;
+  --color-muted: #666;
+  --color-hint: #999;
+  --color-border: #e0e0e0;
+  --color-border-strong: #1a1a1a;
+  --color-accent: #0F6E56;
+  --color-bg: #fff;
+  --color-bg-subtle: #f8f8f6;
+  --max-width: 860px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #e8e8e6;
+    --color-muted: #999;
+    --color-hint: #666;
+    --color-border: #2a2a2a;
+    --color-border-strong: #e8e8e6;
+    --color-accent: #1D9E75;
+    --color-bg: #111;
+    --color-bg-subtle: #1a1a1a;
+  }
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-accent);
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* ── Topbar ── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 0 1rem;
+  border-bottom: 1.5px solid var(--color-border-strong);
+}
+
+.brand {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  color: var(--color-text);
+}
+
+.brand-sub {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: var(--color-muted);
+  display: block;
+  margin-top: 2px;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.nav a {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--color-muted);
+  text-transform: uppercase;
+}
+
+.nav a:hover {
+  color: var(--color-text);
+}
+
+/* ── Dateline ── */
+.dateline {
+  font-size: 11px;
+  color: var(--color-hint);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 0.6rem 0;
+  border-bottom: 0.5px solid var(--color-border);
+  margin-bottom: 2rem;
+}
+
+/* ── Tag ── */
+.tag {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* ── Hero grid ── */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 0.5px solid var(--color-border);
+}
+
+@media (max-width: 640px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  line-height: 1.3;
+  font-weight: 400;
+  color: var(--color-text);
+  margin-bottom: 0.75rem;
+}
+
+.hero-excerpt {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--color-muted);
+  margin-bottom: 1rem;
+}
+
+.meta {
+  font-size: 11px;
+  color: var(--color-hint);
+  letter-spacing: 0.5px;
+}
+
+/* ── Sidebar items ── */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sidebar-item {
+  padding-bottom: 1.25rem;
+  border-bottom: 0.5px solid var(--color-border);
+}
+
+.sidebar-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.sidebar-title {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.4;
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+}
+
+/* ── Section label ── */
+.section-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-hint);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 0.5px solid var(--color-border);
+}
+
+/* ── Article grid ── */
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem 2rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (max-width: 640px) {
+  .article-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card-title {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.45;
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+}
+
+.card-excerpt {
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--color-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* ── Single article ── */
+.article-header {
+  padding: 2rem 0 1.5rem;
+  border-bottom: 0.5px solid var(--color-border);
+  margin-bottom: 2rem;
+}
+
+.article-title {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  line-height: 1.3;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.article-body {
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--color-text);
+  max-width: 640px;
+  margin-bottom: 3rem;
+}
+
+.article-body p {
+  margin-bottom: 1.25rem;
+}
+
+.article-body hr {
+  border: none;
+  border-top: 0.5px solid var(--color-border);
+  margin: 2rem 0;
+}
+
+.article-body em {
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+/* ── Pagination ── */
+.pagination {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  padding: 2rem 0;
+  border-top: 0.5px solid var(--color-border);
+}
+
+.pagination a,
+.pagination span {
+  font-size: 13px;
+  padding: 6px 14px;
+  border: 0.5px solid var(--color-border);
+  border-radius: 4px;
+  color: var(--color-muted);
+}
+
+.pagination a:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.pagination .active {
+  border-color: var(--color-text);
+  color: var(--color-text);
+}
+
+/* ── Footer ── */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 0;
+  border-top: 1.5px solid var(--color-border-strong);
+  margin-top: 2rem;
+}
+
+.footer-copy {
+  font-size: 11px;
+  color: var(--color-hint);
+}
+
+.footer-link {
+  font-size: 11px;
+  color: var(--color-accent);
+}
+
+/* ── Back link ── */
+.back-link {
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+.back-link:hover {
+  color: var(--color-accent);
+}
