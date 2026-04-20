@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getPosts, formatDate, getSourceName } from '../lib/api';
+import { getPosts, formatDate, getSourceName } from '../../lib/api';
 
 export const revalidate = 300; // ISR setiap 5 menit
 
