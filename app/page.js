@@ -1,6 +1,3 @@
- · JS
-Copy
-
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getPostBySlug, getAllSlugs, formatDate, getSourceName } from '../../lib/api';
