@@ -1,15 +1,8 @@
 import Link from 'next/link';
 import { getPosts, formatDate, getSourceName } from '../lib/api';
 
-export const revalidate = 300; // ISR setiap 5 menit
+export const revalidate = 300;
 
-// Ambil tag/kategori dari artikel (dari _embedded)
-function getCategory(post) {
-  const terms = post?._embedded?.['wp:term']?.[0];
-  return terms?.[0]?.name || '';
-}
-
-// Strip HTML tags dari excerpt
 function stripHtml(html = '') {
   return html.replace(/<[^>]*>/g, '').replace(/&hellip;/g, '…').trim();
 }
@@ -17,15 +10,15 @@ function stripHtml(html = '') {
 export default async function HomePage() {
   const { posts } = await getPosts({ perPage: 10 });
 
-  const hero = posts[0] || null;
+  const hero    = posts[0] || null;
   const sidebar = posts.slice(1, 3);
-  const grid = posts.slice(3, 9);
+  const grid    = posts.slice(3, 9);
 
   const today = new Date().toLocaleDateString('id-ID', {
     weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
+    day:     'numeric',
+    month:   'long',
+    year:    'numeric',
   });
 
   return (
@@ -55,14 +48,12 @@ export default async function HomePage() {
       {hero && (
         <section className="hero">
           <div>
-            <span className="tag">{getCategory(hero) || 'Utama'}</span>
+            <span className="tag">{hero.category || 'Utama'}</span>
             <Link href={`/${hero.slug}`}>
-              <h1 className="hero-title"
-                dangerouslySetInnerHTML={{ __html: hero.title.rendered }}
-              />
+              <h1 className="hero-title">{hero.title}</h1>
             </Link>
             <p className="hero-excerpt">
-              {stripHtml(hero.excerpt.rendered).substring(0, 200)}…
+              {stripHtml(hero.excerpt).substring(0, 200)}…
             </p>
             <div className="meta">
               {getSourceName(hero) && <>{getSourceName(hero)} &bull; </>}
@@ -74,11 +65,9 @@ export default async function HomePage() {
             <div className="sidebar">
               {sidebar.map((post) => (
                 <div key={post.id} className="sidebar-item">
-                  <span className="tag">{getCategory(post) || 'Berita'}</span>
+                  <span className="tag">{post.category || 'Berita'}</span>
                   <Link href={`/${post.slug}`}>
-                    <div className="sidebar-title"
-                      dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-                    />
+                    <div className="sidebar-title">{post.title}</div>
                   </Link>
                   <div className="meta">
                     {getSourceName(post) && <>{getSourceName(post)} &bull; </>}
@@ -98,14 +87,12 @@ export default async function HomePage() {
           <div className="article-grid">
             {grid.map((post) => (
               <div key={post.id}>
-                <span className="tag">{getCategory(post) || 'Berita'}</span>
+                <span className="tag">{post.category || 'Berita'}</span>
                 <Link href={`/${post.slug}`}>
-                  <div className="card-title"
-                    dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-                  />
+                  <div className="card-title">{post.title}</div>
                 </Link>
                 <p className="card-excerpt">
-                  {stripHtml(post.excerpt.rendered).substring(0, 120)}…
+                  {stripHtml(post.excerpt).substring(0, 120)}…
                 </p>
                 <div className="meta">{formatDate(post.date)}</div>
               </div>
