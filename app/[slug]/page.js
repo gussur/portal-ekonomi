@@ -1,37 +1,27 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getPostBySlug, getAllSlugs, formatDate, getSourceName } from '../../lib/api';
- 
+
 export const revalidate = 300;
- 
+
 export async function generateStaticParams() {
   const slugs = await getAllSlugs();
   return slugs.map((slug) => ({ slug }));
 }
- 
+
 export async function generateMetadata({ params }) {
   const post = await getPostBySlug(params.slug);
   if (!post) return {};
   return {
-    title: post.meta?.rank_math_focus_keyword
-      ? `${post.title.rendered} — ekonomi.gussur.com`
-      : post.title.rendered,
-    description: post.meta?.rank_math_description || post.excerpt?.rendered?.replace(/<[^>]*>/g, '') || '',
+    title:       `${post.title} — ekonomi.gussur.com`,
+    description: post.meta_description || post.excerpt || '',
   };
 }
- 
-function getCategory(post) {
-  const terms = post?._embedded?.['wp:term']?.[0];
-  return terms?.[0]?.name || '';
-}
- 
+
 export default async function ArticlePage({ params }) {
   const post = await getPostBySlug(params.slug);
   if (!post) notFound();
- 
-  const category = getCategory(post);
-  const sourceName = getSourceName(post);
- 
+
   return (
     <main className="container">
       {/* ── Topbar ── */}
@@ -49,27 +39,32 @@ export default async function ArticlePage({ params }) {
           </ul>
         </nav>
       </header>
- 
+
       {/* ── Artikel ── */}
       <article className="article">
-        {category && <span className="tag">{category}</span>}
- 
-        <h1
-          className="article-title"
-          dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-        />
- 
+        {post.category && <span className="tag">{post.category}</span>}
+
+        <h1 className="article-title">{post.title}</h1>
+
         <div className="meta">
-          {sourceName && <>{sourceName} &bull; </>}
+          {getSourceName(post) && <>{getSourceName(post)} &bull; </>}
           {formatDate(post.date)}
         </div>
- 
+
         <div
           className="article-body"
-          dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+          dangerouslySetInnerHTML={{ __html: post.content }}
         />
+
+        {post.source_url && (
+          <div className="meta" style={{ marginTop: '2rem' }}>
+            <a href={post.source_url} target="_blank" rel="noopener noreferrer">
+              Baca sumber asli →
+            </a>
+          </div>
+        )}
       </article>
- 
+
       {/* ── Footer ── */}
       <footer className="footer">
         <div className="footer-copy">ekonomi.gussur.com &mdash; bagian dari gussur.com</div>
