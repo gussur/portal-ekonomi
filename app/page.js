@@ -26,7 +26,7 @@ export default async function HomePage() {
       {/* ── Topbar ── */}
       <header className="topbar">
         <div className="brand">
-          ekonomi
+          <a href="https://portal-ekonomi-bice.vercel.app/">ekonomi</a>
           <span className="brand-sub">gussur.com / ekonomi</span>
         </div>
         <nav>
@@ -112,8 +112,8 @@ export default async function HomePage() {
 
       {/* ── Footer ── */}
       <footer className="footer">
-        <div className="footer-copy">ekonomi.gussur.com &mdash; bagian dari gussur.com</div>
-        <div className="footer-link">Otomatis dari scraper &rarr; review manual &rarr; publish</div>
+        <div className="footer-copy">Ringkasan pasar modal Indonesia &mdash; Diperbarui setiap pagi pukul 05.00 WIB</div>
+        <div className="footer-link">Sumber: Kontan · Bisnis · CNBC Indonesia · Bloomberg Technoz</div>
       </footer>
     </main>
   );
