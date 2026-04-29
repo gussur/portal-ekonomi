@@ -13,21 +13,28 @@ export async function generateMetadata({ params }) {
   const post = await getPostBySlug(params.slug);
   if (!post) return {};
   return {
-    title:       `${post.title} — ekonomi.gussur.com`,
+    title:       `${post.title} — Portal Ekonomi`,
     description: post.meta_description || post.excerpt || '',
   };
+}
+
+// Hapus baris "Sumber: X." dari akhir konten — ditampilkan terpisah di bawah
+function stripSourceLine(html = '') {
+  return html.replace(/<p>Sumber:[^<]*<\/p>\s*$/i, '').trim();
 }
 
 export default async function ArticlePage({ params }) {
   const post = await getPostBySlug(params.slug);
   if (!post) notFound();
 
+  const sourceName = getSourceName(post);
+
   return (
     <main className="container">
       {/* ── Topbar ── */}
       <header className="topbar">
         <div className="brand">
-          <Link href="/">ekonomi</Link>
+          <a href="https://portal-ekonomi-bice.vercel.app/">ekonomi</a>
           <span className="brand-sub">gussur.com / ekonomi</span>
         </div>
         <nav>
@@ -47,27 +54,30 @@ export default async function ArticlePage({ params }) {
         <h1 className="article-title">{post.title}</h1>
 
         <div className="meta">
-          {getSourceName(post) && <>{getSourceName(post)} &bull; </>}
+          {sourceName && <>{sourceName} &bull; </>}
           {formatDate(post.date)}
         </div>
 
         <div
           className="article-body"
-          dangerouslySetInnerHTML={{ __html: post.content }}
+          dangerouslySetInnerHTML={{ __html: stripSourceLine(post.content) }}
         />
 
-        {post.source_url && (
-          <div className="meta" style={{ marginTop: '2rem' }}>
-            <a href={post.source_url} target="_blank" rel="noopener noreferrer">
-              Baca sumber asli →
-            </a>
+        {/* ── Atribusi sumber ── */}
+        {(sourceName || post.source_url) && (
+          <div className="meta" style={{ marginTop: '2rem', borderTop: '1px solid var(--color-border)', paddingTop: '1rem' }}>
+            Sumber:{' '}
+            {post.source_url
+              ? <a href={post.source_url} target="_blank" rel="noopener noreferrer">{sourceName || post.source_url}</a>
+              : sourceName
+            }
           </div>
         )}
       </article>
 
       {/* ── Footer ── */}
       <footer className="footer">
-        <div className="footer-copy">ekonomi.gussur.com &mdash; bagian dari gussur.com</div>
+        <div className="footer-copy">Ringkasan pasar modal Indonesia &mdash; Diperbarui setiap pagi pukul 05.00 WIB</div>
         <div className="footer-link">
           <Link href="/">&larr; Kembali ke beranda</Link>
         </div>
