@@ -20,7 +20,11 @@ export async function generateMetadata({ params }) {
 
 // Hapus baris "Sumber: X." dari akhir konten — ditampilkan terpisah di bawah
 function stripSourceLine(html = '') {
-  return html.replace(/<p>Sumber:[^<]*<\/p>\s*$/i, '').trim();
+  // Kalau "Sumber: X." jadi paragraf sendiri
+  html = html.replace(/<p>Sumber:[^<]*<\/p>\s*$/i, '').trim();
+  // Kalau "Sumber: X." jadi kalimat terakhir dalam paragraf
+  html = html.replace(/\s*Sumber:[^<.]*\.\s*(<\/p>)$/i, '$1').trim();
+  return html;
 }
 
 export default async function ArticlePage({ params }) {
